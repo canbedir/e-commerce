@@ -6,6 +6,7 @@ import Footer from "@/components/Footer/Footer";
 import { cn } from "@/lib/utils";
 import Category from "@/components/Home/Category";
 import CartProvider from "@/Provider/CartProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
             <Navbar />
             <Category />
             <main className="flex-grow">{children}</main>
+            <Toaster />
             <Footer />
           </div>
         </CartProvider>

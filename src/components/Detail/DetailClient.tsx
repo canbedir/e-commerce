@@ -4,10 +4,11 @@ import { Rating } from "@mui/material";
 import Image from "next/image";
 import Counter from "../General/Counter";
 import { useEffect, useState } from "react";
-import Button from "../General/Button";
 import Comment from "./Comment";
 import Heading from "../General/Heading";
 import useCart from "@/hooks/useCart";
+import { Button } from "../ui/button";
+import { useToast } from "../ui/use-toast";
 
 export type CardProductProps = {
   id: string;
@@ -43,6 +44,8 @@ const DetailClient = ({ product }: { product: any }) => {
     }
   }, [cartPrdcts]);
 
+  const { toast } = useToast();
+
   const increaseFunc = () => {
     if (cardProduct.quantity == 10) return;
     setCardProduct((prev) => ({ ...prev, quantity: prev.quantity + 1 }));
@@ -52,6 +55,22 @@ const DetailClient = ({ product }: { product: any }) => {
     if (cardProduct.quantity == 1) return;
     setCardProduct((prev) => ({ ...prev, quantity: prev.quantity - 1 }));
   };
+
+  const addToBasketFnc = () => {
+    addToBasket(cardProduct);
+  };
+
+  const ToastFnc = () => {
+    toast({
+      title: "Ürün sepete eklendi",
+      variant: "active",
+    });
+  };
+
+    const handleCombinedClick = () => {
+      addToBasketFnc();
+      ToastFnc();
+    };
 
   return (
     <div className="my-10">
@@ -98,11 +117,9 @@ const DetailClient = ({ product }: { product: any }) => {
           {displayButton ? (
             <>
               <div className="mt-10">
-                <Button
-                  text="Ürün Sepette"
-                  active
-                  onClick={() => {}}
-                />
+                <Button size={"lg"} variant={"active"}>
+                  Ürün Sepette
+                </Button>
               </div>
             </>
           ) : (
@@ -116,10 +133,7 @@ const DetailClient = ({ product }: { product: any }) => {
                   />
                 </div>
                 <div>
-                  <Button
-                    text="Sepete Ekle"
-                    onClick={() => addToBasket(cardProduct)}
-                  />
+                  <Button size={"lg"} variant={"mycolor"} onClick={handleCombinedClick}>Sepete Ekle</Button>
                 </div>
               </div>
             </>

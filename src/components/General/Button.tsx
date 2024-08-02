@@ -6,13 +6,14 @@ interface ButtonProps{
     onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
     small?: boolean;
     active?: boolean;
+    error?: boolean
     icon?: IconType;
     disabled?: boolean;
 }
 
-const Button = ({onClick,text,disabled,active,small, icon:Icon}:ButtonProps) => {
+const Button = ({onClick,text,disabled,active,small,error, icon:Icon}:ButtonProps) => {
   return (
-    <button onClick={onClick} disabled={disabled} className={`rounded-lg p-3 ${small ? "w-[250px]" : "w-full"} ${active ? "bg-green-600 text-white" : "bg-black/80 text-white"}`}>
+    <button onClick={onClick} disabled={disabled} className={`rounded-lg p-3 ${small ? "w-[250px]" : "w-full"} ${active ? "bg-green-600 text-white" : "bg-black/80 text-white"} ${error ? "bg-red-700 text-white" : ""}`}>
         {Icon && <Icon/>}
         {text}
     </button>
