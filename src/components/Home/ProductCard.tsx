@@ -1,10 +1,15 @@
+"use client"
 import { Rating } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const ProductCard = ({ product }: { product: any }) => {
+
+  const router = useRouter()
+
   return (
-    <div className="w-[240px] cursor-pointer shadow-lg p-2 rounded-md bg-slate-200 hover:bg-slate-300 flex flex-col justify-between">
+    <div onClick={()=> router.push(`product/${product.id}`)} className="w-[240px] cursor-pointer shadow-lg p-2 rounded-md bg-slate-200 hover:bg-slate-300 flex flex-col justify-between">
       <div className="relative h-[180px]">
         <Image src={product.image} alt="" fill className="object-contain" />
       </div>
