@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { cn } from "@/lib/utils";
+import Category from "@/components/Home/Category";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className={cn(inter.className,"bg-[#1E2227] text-white container")}>
         <div className="flex flex-col min-h-screen">
           <Navbar />
+          <Category/>
           <main className="flex-grow">{children}</main>
           <Footer />
         </div>
