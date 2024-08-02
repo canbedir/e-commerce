@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 
 const CartClient = () => {
-  const { cartPrdcts } = useCart();
+  const { cartPrdcts, removeFromCart, removeCart } = useCart();
 
   if (!cartPrdcts || cartPrdcts.length === 0) {
     return <div>Sepetinizde ürün bulunmamaktadır</div>;
@@ -35,10 +35,19 @@ const CartClient = () => {
             <div className="w-1/5">{cart.quantity}</div>
             <div className="w-1/5 font-semibold">{cart.price} ₺</div>
             <div className="w-1/5">
-                <Button variant={"destructive"}>Ürünü Sil</Button>
+              <Button
+                onClick={()=>removeFromCart(cart)}
+                variant={"destructive"}
+              >
+                Ürünü Sil
+              </Button>
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex items-center justify-between my-5 py-5 border-t">
+        <Button onClick={() => removeCart()} className="w-1/5" size={"lg"} variant={"destructive"}>Sepeti Sil</Button>
+        <div className="text-lg md:text-2xl text-orange-600 font-bold">1000 ₺</div>
       </div>
     </div>
   );
