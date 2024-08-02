@@ -3,10 +3,11 @@
 import { Rating } from "@mui/material";
 import Image from "next/image";
 import Counter from "../General/Counter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../General/Button";
 import Comment from "./Comment";
 import Heading from "../General/Heading";
+import useCart from "@/hooks/useCart";
 
 export type CardProductProps = {
   id: string;
@@ -19,6 +20,9 @@ export type CardProductProps = {
 };
 
 const DetailClient = ({ product }: { product: any }) => {
+  const { productCartQty, addToBasket, cartPrdcts } = useCart();
+  const [displayButton, setDisplayButton] = useState(false);
+
   const [cardProduct, setCardProduct] = useState<CardProductProps>({
     id: product.id,
     name: product.name,
@@ -28,6 +32,16 @@ const DetailClient = ({ product }: { product: any }) => {
     image: product.image,
     inStock: product.inStock,
   });
+
+  useEffect(() => {
+    setDisplayButton(false);
+    let controlDisplay: any = cartPrdcts?.findIndex(
+      (cart) => cart.id == product.id
+    );
+    if (controlDisplay > -1) {
+      setDisplayButton(true);
+    }
+  }, [cartPrdcts]);
 
   const increaseFunc = () => {
     if (cardProduct.quantity == 10) return;
@@ -81,18 +95,35 @@ const DetailClient = ({ product }: { product: any }) => {
           <div className="text-black text-sm max-w-[450px] mt-2">
             {product.description}
           </div>
-          <div className="flex flex-col gap-5">
-            <div>
-              <Counter
-                cardProduct={cardProduct}
-                increaseFunc={increaseFunc}
-                decreaseFunc={decreaseFunc}
-              />
-            </div>
-            <div>
-              <Button text="Sepete Ekle" onClick={() => {}} />
-            </div>
-          </div>
+          {displayButton ? (
+            <>
+              <div className="mt-10">
+                <Button
+                  text="Ürün Sepette"
+                  active
+                  onClick={() => {}}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex flex-col gap-5">
+                <div>
+                  <Counter
+                    cardProduct={cardProduct}
+                    increaseFunc={increaseFunc}
+                    decreaseFunc={decreaseFunc}
+                  />
+                </div>
+                <div>
+                  <Button
+                    text="Sepete Ekle"
+                    onClick={() => addToBasket(cardProduct)}
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
