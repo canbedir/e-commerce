@@ -93,6 +93,10 @@ export const CartContextProvider = (props: Props) => {
   const removeCart = useCallback(() => {
     setCartPrdcts(null);
     localStorage.setItem("cart", JSON.stringify(null));
+    return toast({
+      title: "Sepet silindi",
+      variant: "active",
+    });
   }, []);
 
   const addToBasket = useCallback(
@@ -119,6 +123,10 @@ export const CartContextProvider = (props: Props) => {
         );
         setCartPrdcts(filteredProducts);
         localStorage.setItem("cart", JSON.stringify(filteredProducts));
+        return toast({
+          title: "Ürün sepetten silindi",
+          variant: "active",
+        });
       }
     },
     [cartPrdcts]
