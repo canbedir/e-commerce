@@ -3,13 +3,26 @@
 import useCart from "@/hooks/useCart";
 import Image from "next/image";
 import { Button } from "../ui/button";
+import { CardProductProps } from "../Detail/DetailClient";
+import Counter from "../General/Counter";
 
 const CartClient = () => {
-  const { cartPrdcts, removeFromCart, removeCart } = useCart();
+  const {
+    cartPrdcts,
+    removeFromCart,
+    removeCart,
+    addToBasketIncrease,
+    addToBasketDecrease,
+  } = useCart();
 
   if (!cartPrdcts || cartPrdcts.length === 0) {
     return <div>Sepetinizde ürün bulunmamaktadır</div>;
   }
+
+  let cartPrdctsTotal = cartPrdcts.reduce(
+    (acc: any, item: CardProductProps) => acc + item.quantity * item.price,
+    0
+  );
 
   return (
     <div className="my-3 md:my-10">
@@ -32,11 +45,19 @@ const CartClient = () => {
               </div>
             </div>
             <div className="w-1/5">{cart.name}</div>
-            <div className="w-1/5">{cart.quantity}</div>
+            <div className="w-1/5 flex justify-center">
+              <Counter
+                btnColor
+                txtColor
+                cardProduct={cart}
+                increaseFunc={() => addToBasketIncrease(cart)}
+                decreaseFunc={() => addToBasketDecrease(cart)}
+              />
+            </div>
             <div className="w-1/5 font-semibold">{cart.price} ₺</div>
             <div className="w-1/5">
               <Button
-                onClick={()=>removeFromCart(cart)}
+                onClick={() => removeFromCart(cart)}
                 variant={"destructive"}
               >
                 Ürünü Sil
@@ -46,8 +67,17 @@ const CartClient = () => {
         ))}
       </div>
       <div className="flex items-center justify-between my-5 py-5 border-t">
-        <Button onClick={() => removeCart()} className="w-1/5" size={"lg"} variant={"destructive"}>Sepeti Sil</Button>
-        <div className="text-lg md:text-2xl text-orange-600 font-bold">1000 ₺</div>
+        <Button
+          onClick={() => removeCart()}
+          className="w-1/5"
+          size={"lg"}
+          variant={"destructive"}
+        >
+          Sepeti Sil
+        </Button>
+        <div className="text-lg md:text-2xl text-orange-600 font-bold">
+          {cartPrdctsTotal} ₺
+        </div>
       </div>
     </div>
   );
