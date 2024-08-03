@@ -28,7 +28,6 @@ export default function RootLayout({
         <CartProvider>
           <div className="flex flex-col min-h-screen">
             <Navbar />
-            <Category />
             <main className="flex-grow">{children}</main>
             <Toaster />
             <Footer />
