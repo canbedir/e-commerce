@@ -22,13 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={cn(inter.className, "bg-[#1E2227] text-white container")}
-      >
+      <body className={cn(inter.className, "bg-[#1E2227] text-white")}>
         <CartProvider>
           <div className="flex flex-col min-h-screen">
             <Navbar />
-            <main className="flex-grow">{children}</main>
+            <main className="flex-grow container mx-auto px-4 md:px-10">
+              {children}
+            </main>
             <Toaster />
             <Footer />
           </div>
