@@ -96,15 +96,15 @@ const SignUpPage = () => {
         Kayıt Ol
       </Button>
       <span className="text-white text-center font-bold">OR</span>
-      <Button className="flex gap-2 bg-[#1E2227] text-white border hover:bg-white hover:text-black">
-        <FaGoogle size={20} />{" "}
+      <Button onClick={()=> signIn("google")} className="flex gap-2 bg-[#1E2227] text-white border hover:bg-white hover:text-black">
+        <FaGoogle size={20} />
         <span className="text-lg">Google ile kayıt ol</span>
       </Button>
       <div className="text-white">
-        Hesabın var ise{" "}
+        Hesabın var ise
         <Link className="text-orange-500" href={"/sign-in"}>
           Giriş Yap
-        </Link>{" "}
+        </Link>
       </div>
     </div>
   );
