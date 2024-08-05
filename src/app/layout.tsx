@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import Category from "@/components/Home/Category";
 import CartProvider from "@/Provider/CartProvider";
 import { Toaster } from "@/components/ui/toaster";
+import SessionProviderWrapper from "@/Provider/SessionProviderWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +28,9 @@ export default function RootLayout({
           <div className="flex flex-col min-h-screen">
             <Navbar />
             <main className="flex-grow container mx-auto px-4 md:px-10">
-              {children}
+              <SessionProviderWrapper> {/* SessionProviderWrapper ile sarın */}
+                {children}
+              </SessionProviderWrapper>
             </main>
             <Toaster />
             <Footer />

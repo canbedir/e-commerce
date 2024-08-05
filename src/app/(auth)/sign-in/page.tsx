@@ -1,13 +1,16 @@
 "use client";
+import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { User } from "@prisma/client";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaGoogle } from "react-icons/fa6";
+import { useSession } from "next-auth/react"; // next-auth session
 
 interface SignInFormValues {
   email: string;
@@ -15,6 +18,7 @@ interface SignInFormValues {
 }
 
 const SignInPage = () => {
+  const { data: session } = useSession();
   const {
     register,
     handleSubmit,
@@ -23,6 +27,12 @@ const SignInPage = () => {
 
   const { toast } = useToast();
   const router = useRouter();
+
+  useEffect(() => {
+    if (session) {
+      router.push("/");
+    }
+  }, [session, router]);
 
   const onSubmit: SubmitHandler<SignInFormValues> = (data) => {
     signIn("credentials", {
@@ -56,9 +66,7 @@ const SignInPage = () => {
           placeholder="Email"
           type="email"
           {...register("email", { required: "Email zorunlu" })}
-          className={`border ${
-            errors.email ? "border-red-500" : "border-gray-300"
-          }`}
+          className={`border ${errors.email ? "border-red-500" : "border-gray-300"}`}
         />
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
       </div>
@@ -67,9 +75,7 @@ const SignInPage = () => {
           placeholder="Şifre"
           type="password"
           {...register("password", { required: "Şifre zorunlu" })}
-          className={`border ${
-            errors.password ? "border-red-500" : "border-gray-300"
-          }`}
+          className={`border ${errors.password ? "border-red-500" : "border-gray-300"}`}
         />
         {errors.password && (
           <p className="text-red-500">{errors.password.message}</p>

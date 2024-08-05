@@ -2,13 +2,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaGoogle } from "react-icons/fa6";
 import axios from "axios";
 import { toast, useToast } from "@/components/ui/use-toast";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { getCurrentUser } from "@/app/actions/getCurrentUser";
+import { useSession } from "next-auth/react"; // next-auth session
 
 interface SignUpFormValues {
   email: string;
@@ -16,6 +18,7 @@ interface SignUpFormValues {
 }
 
 const SignUpPage = () => {
+  const { data: session } = useSession();
   const {
     register,
     handleSubmit,
@@ -24,6 +27,12 @@ const SignUpPage = () => {
 
   const { toast } = useToast();
   const router = useRouter();
+
+  useEffect(() => {
+    if (session) {
+      router.push("/");
+    }
+  }, [session, router]);
 
   const onSubmit: SubmitHandler<SignUpFormValues> = (data) => {
     axios.post("/api/register", data).then(() => {
