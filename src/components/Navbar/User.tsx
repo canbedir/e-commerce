@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { type User } from "@prisma/client";
 import { User2 } from "lucide-react";
 import React from "react";
@@ -20,12 +20,11 @@ interface UserProps {
 }
 
 const UserComponent = ({ currentUser }: UserProps) => {
-
-  const router = useRouter()
+  const router = useRouter();
 
   const logoutFunc = () => {
     signOut();
-    router.push("/")
+    router.push("/");
   };
 
   return (
@@ -38,16 +37,16 @@ const UserComponent = ({ currentUser }: UserProps) => {
           <DropdownMenuContent className="absolute right-0 bg-white rounded-md shadow-lg z-50">
             <DropdownMenuLabel>{currentUser.email}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Admin</DropdownMenuItem>
+            <Link href={"/admin"}>
+              <DropdownMenuItem>Admin</DropdownMenuItem>
+            </Link>
             <DropdownMenuItem onClick={logoutFunc}>Çıkış yap</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
         <div>
           <Link href={"/sign-in"}>
-            <Button variant={"secondary"}>
-              Giriş yap
-            </Button>
+            <Button variant={"secondary"}>Giriş yap</Button>
           </Link>
         </div>
       )}
