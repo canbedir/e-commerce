@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "bg-[#1E2227] text-white")}>
+      <body className={cn(inter.className, "bg-[#1E2227]")}>
         <NextSSRPlugin
           routerConfig={extractRouterConfig(ourFileRouter)}
         />

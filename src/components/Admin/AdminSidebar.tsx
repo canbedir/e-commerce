@@ -5,6 +5,7 @@ import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { BsCardChecklist } from "react-icons/bs";
 import { IoCreateOutline } from "react-icons/io5";
 import { usePathname } from "next/navigation";
+import { FaEdit } from "react-icons/fa";
 
 const AdminSidebar = () => {
   const pathname = usePathname();
@@ -18,6 +19,11 @@ const AdminSidebar = () => {
       name: "Ürün oluştur",
       icon: IoCreateOutline,
       url: "/admin/create",
+    },
+    {
+      name: "Ürünleri yönet",
+      icon: FaEdit,
+      url: "/admin/manage",
     },
     {
       name: "Siparişler",

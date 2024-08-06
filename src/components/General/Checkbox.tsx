@@ -1,22 +1,17 @@
-import React from 'react'
-import { FieldValues, UseFormRegister } from 'react-hook-form'
-import { Checkbox } from '../ui/checkbox';
+import { FieldValues, UseFormRegister } from "react-hook-form"
 
-interface CheckboxProps{
-    id:string,
+interface CheckboxProps {
+    id: string
     register: UseFormRegister<FieldValues>
-    label: string;
+    label: string
 }
-
-const CheckboxComponent = ({id,label,register}:CheckboxProps) => {
+const CheckboxComponent:React.FC<CheckboxProps> = ({id, register, label}) => {
   return (
-    <div className='flex items-center gap-2'>
-        <Checkbox className='border-white' {...register(id)}/>
-        <label className='text-white text-sm' htmlFor={id}>
-            {label}
-        </label>
+    <div className="flex items-center gap-2 my-2">
+       <input type="checkbox" {...register(id)}  />
+       <label className="text-sm text-slate-500" htmlFor={id}>{label}</label>
     </div>
+    
   )
 }
-
 export default CheckboxComponent
