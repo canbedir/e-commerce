@@ -9,6 +9,10 @@ import CartProvider from "@/Provider/CartProvider";
 import { Toaster } from "@/components/ui/toaster";
 import SessionProviderWrapper from "@/Provider/SessionProviderWrapper";
 
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "@/app/api/uploadthing/core";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,11 +28,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className, "bg-[#1E2227] text-white")}>
+        <NextSSRPlugin
+          routerConfig={extractRouterConfig(ourFileRouter)}
+        />
         <CartProvider>
           <div className="flex flex-col min-h-screen">
             <Navbar />
             <main className="flex-grow container mx-auto px-4 md:px-10">
-              <SessionProviderWrapper> {/* SessionProviderWrapper ile sarın */}
+              <SessionProviderWrapper>
                 {children}
               </SessionProviderWrapper>
             </main>
