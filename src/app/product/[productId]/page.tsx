@@ -1,22 +1,27 @@
-import DetailClient from '@/components/Detail/DetailClient'
-import { products } from '@/utils/Products'
-import React from 'react'
+import getProductsId from "@/app/actions/getProductsId";
+import DetailClient from "@/components/Detail/DetailClient";
+import React from "react";
 
-interface DetailProps{
-    productId? : string,
+interface DetailProps {
+  params: {
+    productId: string;
+  };
 }
 
-const Detail = ({params}:{params:DetailProps}) => {
+const Detail = async ({ params }: DetailProps) => {
+  const { productId } = params;
 
-    const {productId} = params
-    const product = products.find(product => product.id == productId)
+  const product = await getProductsId({ productId });
 
+  if (!product) {
+    return <div>Ürün bulunamadı</div>;
+  }
 
   return (
     <div>
-        <DetailClient product={product}/>
+      <DetailClient product={product} />
     </div>
-  )
-}
+  );
+};
 
-export default Detail
+export default Detail;

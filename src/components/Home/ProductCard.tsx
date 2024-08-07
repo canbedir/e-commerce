@@ -1,15 +1,18 @@
-"use client"
+"use client";
 import { Rating } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 const ProductCard = ({ product }: { product: any }) => {
-
-  const router = useRouter()
+  const router = useRouter();
+  console.log(product.image, "productimageclg");
 
   return (
-    <div onClick={()=> router.push(`product/${product.id}`)} className="w-[240px] cursor-pointer shadow-lg p-2 rounded-md bg-slate-200 hover:bg-slate-300 flex flex-col justify-between">
+    <div
+      onClick={() => router.push(`product/${product.id}`)}
+      className="w-[240px] cursor-pointer shadow-lg p-2 rounded-md bg-slate-200 hover:bg-slate-300 flex flex-col justify-between"
+    >
       <div className="relative h-[180px]">
         <Image src={product.image} alt="" fill className="object-contain" />
       </div>
@@ -21,7 +24,12 @@ const ProductCard = ({ product }: { product: any }) => {
           </span>
         </div>
         <div className="flex text-xs gap-1">
-          <Rating name="read-only" value={product.value} readOnly className="text-lg" />
+          <Rating
+            name="read-only"
+            value={product.value}
+            readOnly
+            className="text-lg"
+          />
           <span className="text-slate-500">({product.evaluation})</span>
         </div>
       </div>
