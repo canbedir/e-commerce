@@ -12,7 +12,7 @@ const ProductCard = ({ product }: { product: any }) => {
   return (
     <div
       onClick={() => router.push(`product/${product.id}`)}
-      className="w-[240px] cursor-pointer shadow-lg p-2 rounded-md border text-white border-white bg-zinc-900 hover:bg-zinc-800 flex flex-col justify-between"
+      className="w-[240px] cursor-pointer shadow-lg p-2 rounded-md border text-white border-white hover:border-red-700 bg-zinc-900 hover:bg-zinc-800 flex flex-col justify-between"
     >
       <div className="relative h-[180px]">
         <Image src={product.image} alt="" fill className="object-contain" />
