@@ -142,6 +142,7 @@ const CreateForm = () => {
       .then(() => {
         toast({ title: "yükleme işlemi başarılı" });
         router.refresh();
+        window.location.reload()
       })
       .catch((error) => {
         console.log(error, "error");

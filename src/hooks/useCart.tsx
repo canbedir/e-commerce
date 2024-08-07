@@ -52,7 +52,7 @@ export const CartContextProvider = (props: Props) => {
         const existingItem = cartPrdcts.findIndex(
           (item) => item.id === product.id
         );
-
+  
         if (existingItem > -1) {
           updatedCart[existingItem].quantity = ++updatedCart[existingItem]
             .quantity;
@@ -61,7 +61,7 @@ export const CartContextProvider = (props: Props) => {
         localStorage.setItem("cart", JSON.stringify(updatedCart));
       }
     },
-    [cartPrdcts]
+    [cartPrdcts, toast] // Sadece gereken bağımlılıkları ekleyin
   );
 
   const addToBasketDecrease = useCallback(
@@ -78,7 +78,7 @@ export const CartContextProvider = (props: Props) => {
         const existingItem = cartPrdcts.findIndex(
           (item) => item.id === product.id
         );
-
+  
         if (existingItem > -1) {
           updatedCart[existingItem].quantity = --updatedCart[existingItem]
             .quantity;
@@ -87,7 +87,7 @@ export const CartContextProvider = (props: Props) => {
         localStorage.setItem("cart", JSON.stringify(updatedCart));
       }
     },
-    [cartPrdcts]
+    [cartPrdcts, toast] // Sadece gereken bağımlılıkları ekleyin
   );
 
   const removeCart = useCallback(() => {
@@ -112,7 +112,7 @@ export const CartContextProvider = (props: Props) => {
         return updatedCart;
       });
     },
-    [cartPrdcts]
+    [cartPrdcts, toast]
   );
 
   const removeFromCart = useCallback(
@@ -129,7 +129,7 @@ export const CartContextProvider = (props: Props) => {
         });
       }
     },
-    [cartPrdcts]
+    [cartPrdcts, toast]
   );
 
   let value = {

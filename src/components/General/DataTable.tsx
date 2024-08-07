@@ -14,7 +14,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -36,7 +35,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useRouter } from "next/navigation";
-
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export type Product = {
   id: string;
@@ -123,18 +122,17 @@ export const columns: ColumnDef<Product>[] = [
     accessorKey: "delete",
     header: "Ürün Sil",
     cell: ({ row }) => {
-      const router = useRouter()
       const handleDelete = async () => {
         const productId = row.original.id;
-
+  
         try {
           const response = await fetch(`/api/product/${productId}`, {
             method: "DELETE",
           });
-
+  
           if (response.ok) {
             alert(`Ürün ${productId} başarıyla silindi.`);
-            router.refresh()
+            window.location.reload()
           } else {
             alert(`Ürün ${productId} silinirken bir hata oluştu.`);
           }
@@ -143,9 +141,9 @@ export const columns: ColumnDef<Product>[] = [
           alert(`Ürün ${productId} silinirken bir hata oluştu.`);
         }
       };
-
+      
       return (
-        <Button variant={"destructive"} onClick={handleDelete}>
+        <Button variant={"destructive"} onClick={() => handleDelete()}>
           Sil
         </Button>
       );

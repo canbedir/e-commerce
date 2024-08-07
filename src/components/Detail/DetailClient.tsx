@@ -42,7 +42,7 @@ const DetailClient = ({ product }: { product: any }) => {
     if (controlDisplay > -1) {
       setDisplayButton(true);
     }
-  }, [cartPrdcts]);
+  }, [cartPrdcts, product.id]);
 
   const { toast } = useToast();
 
