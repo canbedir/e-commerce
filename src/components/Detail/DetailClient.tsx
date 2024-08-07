@@ -75,8 +75,8 @@ const DetailClient = ({ product }: { product: any }) => {
   return (
     <div className="my-10">
       <div className="md:flex block justify-center md:border">
-        <div className="relative md:h-[700px] md:w-[400px] sm:w-[570px] h-[600px] w-[420px] flex-1 bg-slate-100">
-          <Image src={product?.image} alt="" fill />
+        <div className="relative md:h-[700px] md:w-[400px] sm:w-[570px] h-[600px] w-[420px] flex-1 bg-zinc-800">
+          <Image src={product?.image} alt="" fill className="object-contain" />
         </div>
         <div className="md:w-1/2 bg-gray-200 p-10 w-[420px] sm:w-[570px] ">
           <div className="flex items-center justify-between">
@@ -86,7 +86,7 @@ const DetailClient = ({ product }: { product: any }) => {
             <div className="text-black text-start">
               <div className="font-bold">STOK DURUMU: </div>
               {product.inStock ? (
-                <div className="text-sm text-green-600">Ürün stokta mevcut</div>
+                <div className="text-sm text-green-500">Ürün stokta mevcut</div>
               ) : (
                 <div className="text-sm text-red-600">
                   Ürün stokta bulunmamaktadır
@@ -141,14 +141,14 @@ const DetailClient = ({ product }: { product: any }) => {
         </div>
       </div>
 
-      <div className="mt-20 py-10 bg-white">
+      {/* <div className="mt-20 py-10 bg-gray-200">
         <Heading text="Yorumlar" bold color center />
         <div className="p-5">
           {product?.reviews?.map((prd: any) => (
             <Comment key={prd.id} prd={prd} />
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
