@@ -31,6 +31,7 @@ const SignInPage = () => {
   useEffect(() => {
     if (session) {
       router.push("/");
+      router.refresh();
     }
   }, [session, router]);
 
@@ -40,12 +41,14 @@ const SignInPage = () => {
       redirect: false,
     }).then((callback) => {
       if (callback?.ok) {
-        router.push("/");
-        router.refresh();
-        return toast({
-          title: "Giriş işlemi başarılı",
-          variant: "active",
-        });
+        return (
+          toast({
+            title: "Giriş işlemi başarılı",
+            variant: "active",
+          }),
+          router.push("/"),
+          router.refresh()
+        );
       }
       if (callback?.error) {
         toast({
@@ -66,7 +69,9 @@ const SignInPage = () => {
           placeholder="Email"
           type="email"
           {...register("email", { required: "Email zorunlu" })}
-          className={`border ${errors.email ? "border-red-500" : "border-gray-300"}`}
+          className={`border ${
+            errors.email ? "border-red-500" : "border-gray-300"
+          }`}
         />
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
       </div>
@@ -75,7 +80,9 @@ const SignInPage = () => {
           placeholder="Şifre"
           type="password"
           {...register("password", { required: "Şifre zorunlu" })}
-          className={`border ${errors.password ? "border-red-500" : "border-gray-300"}`}
+          className={`border ${
+            errors.password ? "border-red-500" : "border-gray-300"
+          }`}
         />
         {errors.password && (
           <p className="text-red-500">{errors.password.message}</p>
@@ -85,7 +92,10 @@ const SignInPage = () => {
         Giriş Yap
       </Button>
       <span className="text-white text-center font-bold">OR</span>
-      <Button onClick={()=> signIn("google")} className="flex gap-2 bg-[#1E2227] text-white border hover:bg-white hover:text-black">
+      <Button
+        onClick={() => signIn("google")}
+        className="flex gap-2 bg-[#1E2227] text-white border hover:bg-white hover:text-black"
+      >
         <FaGoogle size={20} />
         <span className="text-lg">Google ile giriş yap</span>
       </Button>

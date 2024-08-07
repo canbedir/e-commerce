@@ -31,6 +31,7 @@ const SignUpPage = () => {
   useEffect(() => {
     if (session) {
       router.push("/");
+      router.refresh();
     }
   }, [session, router]);
 
@@ -46,12 +47,14 @@ const SignUpPage = () => {
         redirect: false,
       }).then((callback) => {
         if (callback?.ok) {
-          router.push("/");
-          router.refresh();
-          toast({
-            title: "Giriş işlemi başarılı",
-            variant: "active",
-          });
+          return (
+            toast({
+              title: "Giriş işlemi başarılı",
+              variant: "active",
+            }),
+            router.push("/"),
+            router.refresh()
+          );
         }
         if (callback?.error) {
           toast({
@@ -96,7 +99,10 @@ const SignUpPage = () => {
         Kayıt Ol
       </Button>
       <span className="text-white text-center font-bold">OR</span>
-      <Button onClick={()=> signIn("google")} className="flex gap-2 bg-[#1E2227] text-white border hover:bg-white hover:text-black">
+      <Button
+        onClick={() => signIn("google")}
+        className="flex gap-2 bg-[#1E2227] text-white border hover:bg-white hover:text-black"
+      >
         <FaGoogle size={20} />
         <span className="text-lg">Google ile kayıt ol</span>
       </Button>
