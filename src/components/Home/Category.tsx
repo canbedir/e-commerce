@@ -24,7 +24,7 @@ const Category = () => {
       {categoryList.map((category, index) => (
         <div
           key={index}
-          className="text-black bg-slate-200 rounded-md min-w-[120px] flex flex-1 items-center justify-center cursor-pointer text-center px-4 py-2 hover:bg-red-700 hover:text-white transition"
+          className="text-white border border-white rounded-md min-w-[120px] flex flex-1 items-center justify-center cursor-pointer text-center px-4 py-2 hover:border-red-700 transition"
         >
           {category.name}
         </div>

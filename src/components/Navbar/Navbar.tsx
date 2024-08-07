@@ -14,7 +14,7 @@ const Navbar = async () => {
         <Logo />
         <Search />
       </div>
-      <div className='flex items-center gap-10'>
+      <div className='flex items-center gap-10 text-white'>
         <CardCount />
         <UserComponent currentUser={currentUser} />
         <NavbarMenu />
