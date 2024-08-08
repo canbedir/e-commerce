@@ -23,8 +23,8 @@ const UserComponent = ({ currentUser }: UserProps) => {
   const router = useRouter();
 
   const logoutFunc = () => {
-    signOut({redirect:false});
-    router.push("/");
+    signOut({ redirect: false });
+    return router.push("/"), window.location.reload();
   };
 
   return (
