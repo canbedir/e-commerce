@@ -6,30 +6,33 @@ import { BsCardChecklist } from "react-icons/bs";
 import { IoCreateOutline } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 import { FaEdit } from "react-icons/fa";
+import { IoMdAdd } from "react-icons/io";
+import { FaRegEdit } from "react-icons/fa";
+
 
 const AdminSidebar = () => {
   const pathname = usePathname();
   const adminPanel = [
-    {
+/*     {
       name: "Özetler",
       icon: TbLayoutDashboardFilled,
       url: "/admin",
-    },
+    }, */
     {
       name: "Ürün oluştur",
-      icon: IoCreateOutline,
+      icon: IoMdAdd,
       url: "/admin/create",
     },
     {
       name: "Ürünleri yönet",
-      icon: FaEdit,
+      icon: FaRegEdit,
       url: "/admin/manage",
     },
-    {
+/*     {
       name: "Siparişler",
       icon: BsCardChecklist,
       url: "/admin/order",
-    },
+    }, */
   ];
 
   return (

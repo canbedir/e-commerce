@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { IconType } from "react-icons";
+import { Button } from "../ui/button";
 
 interface AdminSidebarItemProps {
   selected?: boolean;
@@ -18,12 +19,12 @@ const AdminSidebarItem = ({
   return (
     <Link
       href={url}
-      className={`cursor-pointer flex items-center gap-2 ${
-        selected ? "text-white" : "text-white/50"
-      }`}
+      className={`cursor-pointer mt-5 text-white`}
     >
+      <Button className="p-8 flex gap-2" variant={"secondary"}>
         <Icon size={25} />
         <div>{name}</div>
+      </Button>
     </Link>
   );
 };

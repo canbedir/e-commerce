@@ -14,6 +14,7 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
+import { useToast } from "../ui/use-toast";
 
 interface UserProps {
   currentUser: User | null | undefined;
@@ -21,10 +22,14 @@ interface UserProps {
 
 const UserComponent = ({ currentUser }: UserProps) => {
   const router = useRouter();
+  const { toast } = useToast();
 
   const logoutFunc = () => {
-    signOut({ redirect: false });
-    return router.push("/"), window.location.reload();
+    return (
+      signOut(),
+      router.push("/"),
+      router.refresh()
+    );
   };
 
   return (
