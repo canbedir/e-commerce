@@ -61,7 +61,7 @@ export const CartContextProvider = (props: Props) => {
         localStorage.setItem("cart", JSON.stringify(updatedCart));
       }
     },
-    [cartPrdcts, toast] // Sadece gereken bağımlılıkları ekleyin
+    [cartPrdcts, toast] 
   );
 
   const addToBasketDecrease = useCallback(
@@ -87,7 +87,7 @@ export const CartContextProvider = (props: Props) => {
         localStorage.setItem("cart", JSON.stringify(updatedCart));
       }
     },
-    [cartPrdcts, toast] // Sadece gereken bağımlılıkları ekleyin
+    [cartPrdcts, toast] 
   );
 
   const removeCart = useCallback(() => {
