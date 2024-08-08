@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, ChevronDown, MoreHorizontal, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -34,8 +34,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useRouter } from "next/navigation";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export type Product = {
   id: string;
@@ -56,12 +54,14 @@ export const columns: ColumnDef<Product>[] = [
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
+        className="border-white"
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
+        className="border-white"
         aria-label="Select row"
       />
     ),
@@ -70,24 +70,27 @@ export const columns: ColumnDef<Product>[] = [
   },
   {
     accessorKey: "id",
-    header: "ID",
-    cell: ({ row }) => (
-      <div
-        onClick={() => navigator.clipboard.writeText(row.getValue("id"))}
-        className="capitalize cursor-pointer"
-      >
-        {row.getValue("id")}
-      </div>
-    ),
+    header: () => <div className=" text-center text-white">ID</div>,
+    cell: ({ row }) => {
+      const product = row.original;
+      const copyProduct = () => {
+        navigator.clipboard.writeText(product.id);
+      };
+      return (
+        <div onClick={copyProduct} className={`capitalize text-white text-center cursor-pointer`}>
+          {row.getValue("id")}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "name",
-    header: "Ad",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
+    header: () => <div className=" text-center text-white">Ad</div>,
+    cell: ({ row }) => <div className="capitalize text-center text-white">{row.getValue("name")}</div>,
   },
   {
     accessorKey: "price",
-    header: () => <div className="text-right">Fiyat</div>,
+    header: () => <div className="text-center text-white">Fiyat</div>,
     cell: ({ row }) => {
       const price = parseFloat(row.getValue("price"));
 
@@ -96,82 +99,54 @@ export const columns: ColumnDef<Product>[] = [
         currency: "TRY",
       }).format(price);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="text-white text-center font-medium">{formatted}</div>;
     },
   },
   {
     accessorKey: "description",
-    header: "Açıklama",
-    cell: ({ row }) => <div>{row.getValue("description")}</div>,
+    header: () => <div className=" text-center text-white">Açıklama</div>,
+    cell: ({ row }) => <div className="text-white text-center">{row.getValue("description")}</div>,
   },
   {
     accessorKey: "brand",
-    header: "Marka",
-    cell: ({ row }) => <div>{row.getValue("brand")}</div>,
+    header: () => <div className=" text-center text-white">Marka</div>,
+    cell: ({ row }) => <div className="text-white text-center">{row.getValue("brand")}</div>,
   },
   {
     accessorKey: "inStock",
-    header: "Stok Durumu",
+    header: () => <div className=" text-center text-white">Stok Durumu</div>,
+
     cell: ({ row }) => {
       const inStock = row.getValue("inStock");
       console.log(`Product ID: ${row.original.id}, In Stock: ${inStock}`);
-      return <div>{inStock ? "In Stock" : "Out of Stock"}</div>;
+      return <div className="text-white text-center">{inStock ? "In Stock" : "Out of Stock"}</div>;
     },
   },
   {
     accessorKey: "delete",
-    header: "Ürün Sil",
+    header: () => <div className=" text-center text-white">Ürün Sil</div>,
     cell: ({ row }) => {
       const handleDelete = async () => {
         const productId = row.original.id;
-  
         try {
           const response = await fetch(`/api/product/${productId}`, {
             method: "DELETE",
           });
-  
+
           if (response.ok) {
             alert(`Ürün ${productId} başarıyla silindi.`);
-            window.location.reload()
+            window.location.reload();
           } else {
-            alert(`Ürün ${productId} silinirken bir hata oluştu.`);
+            alert(`Ürün ${productId} silinirken bir hata oluştu`);
+
           }
         } catch (error) {
           console.error("Error deleting product: ", error);
-          alert(`Ürün ${productId} silinirken bir hata oluştu.`);
+          alert(`Ürün ${productId} silinirken bir hata oluştu`);
         }
       };
-      
-      return (
-        <Button variant={"destructive"} onClick={() => handleDelete()}>
-          Sil
-        </Button>
-      );
-    },
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const product = row.original;
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(product.id)}
-            >
-              Copy product ID
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <Trash onClick={() => handleDelete()} className="text-red-600 w-full cursor-pointer" />;
     },
   },
 ];
