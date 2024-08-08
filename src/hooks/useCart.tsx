@@ -18,6 +18,7 @@ interface CartContextProps {
   addToBasketDecrease: (product: CardProductProps) => void;
   removeFromCart: (product: CardProductProps) => void;
   removeCart: () => void;
+  checkoutCart: () => void;
 }
 
 const CartContext = createContext<CartContextProps | null>(null);
@@ -99,6 +100,15 @@ export const CartContextProvider = (props: Props) => {
     });
   }, []);
 
+  const checkoutCart = useCallback(() => {
+    setCartPrdcts(null);
+    localStorage.setItem("cart", JSON.stringify(null));
+    return toast({
+      title: "Başarıyla sipariş verildi.",
+      variant: "active",
+    });
+  }, []);
+
   const addToBasket = useCallback(
     (product: CardProductProps) => {
       setCartPrdcts((prev) => {
@@ -139,6 +149,7 @@ export const CartContextProvider = (props: Props) => {
     removeFromCart,
     addToBasketDecrease,
     removeCart,
+    checkoutCart,
     cartPrdcts,
   };
   return <CartContext.Provider value={value} {...props} />;

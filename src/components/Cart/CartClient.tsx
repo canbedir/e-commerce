@@ -6,12 +6,14 @@ import { Button } from "../ui/button";
 import { CardProductProps } from "../Detail/DetailClient";
 import Counter from "../General/Counter";
 import { Trash } from "lucide-react";
+import Link from "next/link";
 
 const CartClient = () => {
   const {
     cartPrdcts,
     removeFromCart,
     removeCart,
+    checkoutCart,
     addToBasketIncrease,
     addToBasketDecrease,
   } = useCart();
@@ -19,20 +21,30 @@ const CartClient = () => {
   if (!cartPrdcts || cartPrdcts.length === 0) {
     return (
       <div className="text-white text-center h-[740px] flex flex-col gap-2 items-center justify-center">
-        <h1 className="font-extrabold text-2xl">
+        <div className="flex items-center -space-x-5">
+          <h1 className="text-white text-7xl">hi</h1>
+          <Image
+            src={"/xlogo.png"}
+            alt="logo"
+            width={100}
+            height={100}
+            className="object-contain"
+          />
+        </div>
+        <h1 className="font-extrabold text-3xl">
           Sepetiniz şu an boş görünüyor.
         </h1>
-        <h2 className="text-white/80">Beğendiğin ürünü seçip sepete ekle!</h2>
+        <h2 className="text-white/80 text-lg">Beğendiğin ürünü seçip sepete ekle!</h2>
       </div>
     );
   }
 
   let cartPrdctsTotal = cartPrdcts
-  .reduce(
-    (acc: any, item: CardProductProps) => acc + item.quantity * item.price,
-    0
-  )
-  .toFixed(2)
+    .reduce(
+      (acc: any, item: CardProductProps) => acc + item.quantity * item.price,
+      0
+    )
+    .toFixed(2);
 
   return (
     <div className="my-3 md:my-10">
@@ -89,9 +101,11 @@ const CartClient = () => {
         </div>
       </div>
       <div className="text-end">
-        <Button variant={"active"} size={"lg"}>
-          Ödeme Yap
-        </Button>
+        <Link href={"/payment"}>
+          <Button onClick={() => checkoutCart()} variant={"active"} size={"lg"}>
+            Sipariş Ver
+          </Button>
+        </Link>
       </div>
     </div>
   );
