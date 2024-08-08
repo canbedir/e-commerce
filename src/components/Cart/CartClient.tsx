@@ -27,10 +27,11 @@ const CartClient = () => {
     );
   }
 
-  let cartPrdctsTotal = cartPrdcts.reduce(
+  let cartPrdctsTotal = cartPrdcts
+  .reduce(
     (acc: any, item: CardProductProps) => acc + item.quantity * item.price,
     0
-  );
+  )
 
   return (
     <div className="my-3 md:my-10">
@@ -41,7 +42,8 @@ const CartClient = () => {
         <div className="w-1/5">Ürün fiyatı</div>
         <div className="w-1/5"></div>
       </div>
-      <div>
+
+      <div className="max-h-[400px] overflow-y-auto">
         {cartPrdcts.map((cart) => (
           <div
             key={cart.id}
@@ -84,6 +86,11 @@ const CartClient = () => {
         <div className="text-lg md:text-2xl text-white/80 font-bold">
           <span>Toplam: {cartPrdctsTotal} ₺</span>
         </div>
+      </div>
+      <div className="text-end">
+        <Button variant={"active"} size={"lg"}>
+          Ödeme Yap
+        </Button>
       </div>
     </div>
   );
