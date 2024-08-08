@@ -1,8 +1,4 @@
 "use client";
-import { FaComputer } from "react-icons/fa6";
-import { GiBallerinaShoes } from "react-icons/gi";
-import { FaTabletAlt } from "react-icons/fa";
-import { CiMicrophoneOn } from "react-icons/ci";
 import {
   getStorage,
   ref,
@@ -15,12 +11,19 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
-import Heading from "../General/Heading";
 import InputComponents from "../General/InputComponents";
 import CheckboxComponent from "../General/Checkbox";
 import ChoiceInput from "../General/ChoiceInput";
 import Button from "../General/Button";
 import { firebaseApp } from "@/lib/firebase";
+import { FaTshirt } from "react-icons/fa";
+import { IoGlasses } from "react-icons/io5";
+import { TbShoe } from "react-icons/tb";
+import { FaShoppingBag } from "react-icons/fa";
+import { RiShirtFill } from "react-icons/ri";
+import { FaArrowLeft, FaDownLeftAndUpRightToCenter } from "react-icons/fa6";
+import Link from "next/link";
+import { Input } from "../ui/input";
 
 const CreateForm = () => {
   const [img, setImg] = useState<File | null>(null);
@@ -28,28 +31,24 @@ const CreateForm = () => {
 
   const categoryList = [
     {
-      name: "Bilgisayar",
-      icon: FaComputer,
-    },
-    {
       name: "Ayakkabı",
-      icon: GiBallerinaShoes,
+      icon: TbShoe,
     },
     {
-      name: "Tablet",
-      icon: FaTabletAlt,
+      name: "Çanta",
+      icon: FaShoppingBag,
     },
     {
-      name: "Mikrofon",
-      icon: CiMicrophoneOn,
+      name: "Gömlek",
+      icon: RiShirtFill,
     },
     {
-      name: "Ayakkabı1",
-      icon: FaComputer,
+      name: "Gözlük",
+      icon: IoGlasses,
     },
     {
-      name: "Ayakkabı2",
-      icon: FaComputer,
+      name: "Tshirt",
+      icon: FaTshirt,
     },
   ];
 
@@ -80,11 +79,11 @@ const CreateForm = () => {
 
     const handleChange = async () => {
       if (!img) {
-        toast({ title: "Lütfen bir resim seçin" });
+        toast({ title: "Lütfen bir resim seçin." });
         return;
       }
 
-      toast({ title: "yükleme işlemi başarılı" });
+      toast({ title: "Resim başarıyla yüklendi." });
       try {
         const storage = getStorage(firebaseApp);
         const uniqueFileName = `${uuidv4()}_${img.name}`;
@@ -131,7 +130,7 @@ const CreateForm = () => {
     await handleChange();
 
     if (!uploadedImg) {
-      toast({ title: "Resim yüklenemedi" });
+      toast({ title: "Resim yüklenemedi." });
       return;
     }
 
@@ -140,9 +139,9 @@ const CreateForm = () => {
     axios
       .post("/api/product", newData)
       .then(() => {
-        toast({ title: "yükleme işlemi başarılı" });
+        toast({ title: "Ürün başarıyla eklendi." });
         router.refresh();
-        window.location.reload()
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error, "error");
@@ -168,9 +167,15 @@ const CreateForm = () => {
   };
 
   return (
-    <div className="text-black">
-      <Heading text="ÜRÜN OLUSTUR" center />
+    <div>
+      <span className="absolute left-10 text-white">
+        <Link href={"/admin"}>
+          <FaArrowLeft size={30} />
+        </Link>
+      </span>
+      <h1 className="text-center text-2xl font-bold text-white">ÜRÜN EKLE</h1>
       <InputComponents
+        adminui
         placeholder="Ad"
         type="text"
         id="name"
@@ -179,6 +184,7 @@ const CreateForm = () => {
         required
       />
       <InputComponents
+        adminui
         placeholder="Acıklama"
         type="text"
         id="description"
@@ -187,6 +193,7 @@ const CreateForm = () => {
         required
       />
       <InputComponents
+        adminui
         placeholder="Marka"
         type="text"
         id="brand"
@@ -195,6 +202,7 @@ const CreateForm = () => {
         required
       />
       <InputComponents
+        adminui
         placeholder="Fiyat"
         type="number"
         id="price"
@@ -207,7 +215,7 @@ const CreateForm = () => {
         label="Ürün Stokta Mevcut mu ?"
         register={register}
       />
-      <div className="flex flex-wrap gap-3">
+      <div className="grid grid-cols-3 gap-3">
         {categoryList.map((cat, i) => (
           <ChoiceInput
             key={i}
@@ -218,8 +226,8 @@ const CreateForm = () => {
           />
         ))}
       </div>
-      <input className="mb-2" type="file" onChange={onChangeFunc} />
-      <Button text="Ürün Olustur" onClick={handleSubmit(onSubmit)} />
+      <Input className="my-3" type="file" onChange={onChangeFunc}/>
+      <Button text="Ekle" whiteColor onClick={handleSubmit(onSubmit)} />
     </div>
   );
 };

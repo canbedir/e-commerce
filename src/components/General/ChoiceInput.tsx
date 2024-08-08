@@ -17,12 +17,12 @@ const ChoiceInput = ({
   return (
     <div
       onClick={() => onClick(text)}
-      className={`flex items-center cursor-pointer gap-2 justify-center h-16 bg-white text-black ${
-        selected ? "border-orange-600 border-4" : "border-gray-200"
+      className={`flex items-center cursor-pointer gap-2 justify-center h-16 text-white border ${
+        selected ? "border-red-600 border-4" : "border-gray-200"
       }`}
     >
-      <Icon />
-      <span>{text}</span>
+      <Icon size={25} />
+      <span className="font-semibold text-lg">{text}</span>
     </div>
   );
 };
