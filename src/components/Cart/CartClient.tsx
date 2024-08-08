@@ -32,6 +32,7 @@ const CartClient = () => {
     (acc: any, item: CardProductProps) => acc + item.quantity * item.price,
     0
   )
+  .toFixed(2)
 
   return (
     <div className="my-3 md:my-10">
