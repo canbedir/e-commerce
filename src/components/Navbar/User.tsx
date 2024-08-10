@@ -25,11 +25,7 @@ const UserComponent = ({ currentUser }: UserProps) => {
   const { toast } = useToast();
 
   const logoutFunc = () => {
-    return (
-      signOut(),
-      router.push("/"),
-      router.refresh()
-    );
+    return signOut(), router.push("/"), router.refresh();
   };
 
   return (
@@ -44,6 +40,9 @@ const UserComponent = ({ currentUser }: UserProps) => {
             <DropdownMenuSeparator />
             <Link href={"/admin"}>
               <DropdownMenuItem>Admin</DropdownMenuItem>
+            </Link>
+            <Link href={"/my-orders"}>
+              <DropdownMenuItem>Siparişlerim</DropdownMenuItem>
             </Link>
             <DropdownMenuItem onClick={logoutFunc}>Çıkış yap</DropdownMenuItem>
           </DropdownMenuContent>
