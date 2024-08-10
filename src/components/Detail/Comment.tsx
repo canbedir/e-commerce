@@ -1,20 +1,80 @@
-import React from "react";
-import Avatar from "../General/Avatar";
-import { RxAvatar } from "react-icons/rx";
+import { useState } from "react";
 import { Rating } from "@mui/material";
+import { StarIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-const Comment = ({ prd }: { prd: any }) => {
+const CommentForm = ({
+  productId,
+  onCommentAdded,
+}: {
+  productId: string;
+  onCommentAdded: () => void;
+}) => {
+  const [rating, setRating] = useState<number | null>(0);
+  const [comment, setComment] = useState("");
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const response = await fetch("/api/review", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId, rating, comment }),
+    });
+
+    if (response.ok) {
+      setRating(0);
+      setComment("");
+      onCommentAdded(); // Yorum eklendikten sonra parent componenti bilgilendir
+      router.refresh(); // Sayfayı yenile
+    } else {
+      alert("Yorum eklenirken bir hata oluştu.");
+    }
+  };
+
   return (
-    <div className="border border-black/40 w-full md:w-1/2 p-2 bg-black/80 rounded-lg mt-10">
-      {/* <Avatar image={prd?.user?.image} /> */}
-      <div className="flex items-center gap-2">
-        <RxAvatar size={45} />
-        <div className="font-semibold">{prd?.user?.name}</div>
-        <Rating name="read-only" value={prd?.user?.rating} readOnly />
+    <form onSubmit={handleSubmit} className="mt-16">
+      <div className="mb-4 flex items-center gap-2">
+        <label
+          htmlFor="rating"
+          className="block text-sm font-medium text-white"
+        >
+          Puan:
+        </label>
+        <Rating
+          name="rating"
+          value={rating}
+          onChange={(event, newValue) => setRating(newValue)}
+          emptyIcon={<StarIcon style={{ color: "#b6b6b6" }} />}
+        />
       </div>
-      <div className="">{prd.comment}</div>
-    </div>
+      <div className="mb-4">
+        <label
+          htmlFor="comment"
+          className="block text-sm font-medium text-white"
+        >
+          Yorum:
+        </label>
+        <textarea
+          id="comment"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          rows={4}
+          className="text-black mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          required
+        />
+      </div>
+      <button
+        type="submit"
+        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+      >
+        Yorum Ekle
+      </button>
+    </form>
   );
 };
 
-export default Comment;
+export default CommentForm;

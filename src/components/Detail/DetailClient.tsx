@@ -4,11 +4,11 @@ import { Rating } from "@mui/material";
 import Image from "next/image";
 import Counter from "../General/Counter";
 import { useEffect, useState } from "react";
-import Comment from "./Comment";
-import Heading from "../General/Heading";
-import useCart from "@/hooks/useCart";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
+import CommentForm from "./Comment";
+import useCart from "@/hooks/useCart";
+import { StarIcon } from "lucide-react";
 
 export type CardProductProps = {
   id: string;
@@ -23,7 +23,7 @@ export type CardProductProps = {
 const DetailClient = ({ product }: { product: any }) => {
   const { productCartQty, addToBasket, cartPrdcts } = useCart();
   const [displayButton, setDisplayButton] = useState(false);
-
+  const [reviews, setReviews] = useState([]);
   const [cardProduct, setCardProduct] = useState<CardProductProps>({
     id: product.id,
     name: product.name,
@@ -34,6 +34,12 @@ const DetailClient = ({ product }: { product: any }) => {
     inStock: product.inStock,
   });
 
+  const fetchReviews = async () => {
+    const response = await fetch(`/api/review?productId=${product.id}`);
+    const data = await response.json();
+    setReviews(data);
+  };
+
   useEffect(() => {
     setDisplayButton(false);
     let controlDisplay: any = cartPrdcts?.findIndex(
@@ -43,6 +49,10 @@ const DetailClient = ({ product }: { product: any }) => {
       setDisplayButton(true);
     }
   }, [cartPrdcts, product.id]);
+
+  useEffect(() => {
+    fetchReviews();
+  }, [product.id]);
 
   const { toast } = useToast();
 
@@ -67,10 +77,23 @@ const DetailClient = ({ product }: { product: any }) => {
     });
   };
 
-    const handleCombinedClick = () => {
-      addToBasketFnc();
-      ToastFnc();
+  const handleCombinedClick = () => {
+    addToBasketFnc();
+    ToastFnc();
+  };
+
+  const handleCommentAdded = () => {
+    fetchReviews();
+  };
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      const response = await fetch(`/api/review?productId=${product.id}`);
+      const data = await response.json();
+      setReviews(data);
     };
+    fetchReviews();
+  }, [product.id]);
 
   return (
     <div className="my-10">
@@ -133,7 +156,13 @@ const DetailClient = ({ product }: { product: any }) => {
                   />
                 </div>
                 <div>
-                  <Button size={"lg"} variant={"mycolor"} onClick={handleCombinedClick}>Sepete Ekle</Button>
+                  <Button
+                    size={"lg"}
+                    variant={"mycolor"}
+                    onClick={handleCombinedClick}
+                  >
+                    Sepete Ekle
+                  </Button>
                 </div>
               </div>
             </>
@@ -141,14 +170,37 @@ const DetailClient = ({ product }: { product: any }) => {
         </div>
       </div>
 
-      {/* <div className="mt-20 py-10 bg-gray-200">
-        <Heading text="Yorumlar" bold color center />
-        <div className="p-5">
-          {product?.reviews?.map((prd: any) => (
-            <Comment key={prd.id} prd={prd} />
-          ))}
-        </div>
-      </div> */}
+      {/* Yorumlar kısmı */}
+      <div className="mt-40 text-white border p-5">
+        <h2 className="text-3xl font-bold text-center">Yorumlar</h2>
+        {reviews.length > 0 ? (
+          reviews.map((review: any) => (
+            <div key={review.id} className="my-4 flex items-center gap-5">
+              <p>
+                <div className="flex items-center gap-3">
+                  <strong>{review.user.email}</strong>
+                  <div>
+                    <Rating
+                      value={review.rating}
+                      readOnly
+                      emptyIcon={<StarIcon style={{ color: "#b6b6b6" }} />}
+                    />
+                  </div>
+                </div>
+                <p className="text-sm break-words max-w-[700px]">
+                  {review.comment}
+                </p>
+              </p>
+            </div>
+          ))
+        ) : (
+          <p>Bu ürün için henüz yorum yapılmamış.</p>
+        )}
+        <CommentForm
+          productId={product.id}
+          onCommentAdded={handleCommentAdded}
+        />
+      </div>
     </div>
   );
 };
