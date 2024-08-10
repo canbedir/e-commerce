@@ -1,6 +1,6 @@
 "use client";
+import React, { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -9,8 +9,10 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
-import { useRouter, useSearchParams } from "next/navigation"; // useRouter ve useSearchParams import et
+import { useRouter, useSearchParams } from "next/navigation";
 import "./orders.css";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface Order {
   id: number;
@@ -21,7 +23,7 @@ interface Order {
   image: string;
 }
 
-const Orders: React.FC = () => {
+const OrdersComponent: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const ordersPerPage = 5; // Bir sayfada gösterilecek sipariş sayısı
 
@@ -63,7 +65,27 @@ const Orders: React.FC = () => {
   };
 
   if (orders.length === 0) {
-    return <div>Sipariş bulunmuyor.</div>;
+    return (
+      <div className="text-white text-center h-[740px] flex flex-col gap-2 items-center justify-center">
+        <div className="flex items-center -space-x-5">
+          <h1 className="text-white text-7xl">hi</h1>
+          <Image
+            src={"/xlogo.png"}
+            alt="logo"
+            width={100}
+            height={100}
+            className="object-contain"
+          />
+        </div>
+        <h1 className="font-extrabold text-3xl">Sipariş bulunamadı.</h1>
+        <h2 className="text-white/80 text-lg flex flex-col gap-2">
+          Beğendiğin ürünü seçip sipariş ver!
+          <Link href={"/"}>
+            <Button className="w-1/2" variant={"secondary"}>Geri dön</Button>
+          </Link>
+        </h2>
+      </div>
+    );
   }
 
   return (
@@ -124,7 +146,9 @@ const Orders: React.FC = () => {
                   href="#"
                   onClick={() => handlePageChange(number)}
                   className={
-                    currentPage === number ? "bg-indigo-600 hover:bg-indigo-800 text-white hover:text-white" : "hover:bg-blue-500 hover:text-white"
+                    currentPage === number
+                      ? "bg-indigo-600 hover:bg-indigo-800 text-white hover:text-white"
+                      : "hover:bg-blue-500 hover:text-white"
                   }
                 >
                   {number}
@@ -149,6 +173,14 @@ const Orders: React.FC = () => {
         </Pagination>
       </div>
     </div>
+  );
+};
+
+const Orders: React.FC = () => {
+  return (
+    <Suspense fallback={<div>Yükleniyor...</div>}>
+      <OrdersComponent />
+    </Suspense>
   );
 };
 
