@@ -8,15 +8,32 @@ import Counter from "../General/Counter";
 import { Trash } from "lucide-react";
 import Link from "next/link";
 
+
 const CartClient = () => {
   const {
     cartPrdcts,
     removeFromCart,
     removeCart,
-    checkoutCart,
     addToBasketIncrease,
     addToBasketDecrease,
   } = useCart();
+
+  const checkoutCart = () => {
+    if (!cartPrdcts) {
+      return null;
+    }
+    const currentCart = cartPrdcts.map((product) => ({
+      ...product,
+      date: new Date().toISOString(),
+    }));
+    const previousOrders = JSON.parse(
+      localStorage.getItem("my-orders") || "[]"
+    );
+
+    const updatedOrders = [...previousOrders, ...currentCart];
+    localStorage.setItem("my-orders", JSON.stringify(updatedOrders));
+    removeCart();
+  };
 
   if (!cartPrdcts || cartPrdcts.length === 0) {
     return (
@@ -34,7 +51,9 @@ const CartClient = () => {
         <h1 className="font-extrabold text-3xl">
           Sepetiniz şu an boş görünüyor.
         </h1>
-        <h2 className="text-white/80 text-lg">Beğendiğin ürünü seçip sepete ekle!</h2>
+        <h2 className="text-white/80 text-lg">
+          Beğendiğin ürünü seçip sepete ekle!
+        </h2>
       </div>
     );
   }
@@ -102,7 +121,7 @@ const CartClient = () => {
       </div>
       <div className="text-end">
         <Link href={"/payment"}>
-          <Button onClick={() => checkoutCart()} variant={"active"} size={"lg"}>
+          <Button onClick={checkoutCart} variant={"active"} size={"lg"}>
             Sipariş Ver
           </Button>
         </Link>
