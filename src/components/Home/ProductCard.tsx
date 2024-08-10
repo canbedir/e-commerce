@@ -7,12 +7,13 @@ import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 import useCart from "@/hooks/useCart";
+import { useReviews } from "@/hooks/useReviews";
 
 const ProductCard = ({ product }: { product: any }) => {
   const router = useRouter();
   const { addToBasket, cartPrdcts } = useCart();
   const [displayButton, setDisplayButton] = useState(false);
-
+  const { reviews, averageRating } = useReviews(product.id);
   const { toast } = useToast();
 
   const addToBasketFnc = () => {
@@ -64,12 +65,19 @@ const ProductCard = ({ product }: { product: any }) => {
         <div className="flex text-xs gap-1">
           <Rating
             name="read-only"
-            value={product.value}
+            value={averageRating}
             readOnly
-            className="text-lg"
-            emptyIcon={<StarIcon style={{ color: "gray" }} />}
+            className="text-xl"
+            sx={{
+              "& .MuiRating-iconFilled": {
+                color: "#FFD700",
+              },
+              "& .MuiRating-iconEmpty": {
+                color: "#b1b1b1",
+              },
+            }}
           />
-          <span className="text-slate-500">({product.evaluation})</span>
+          <span className="text-slate-300">({reviews.length})</span>
         </div>
       </div>
       <div className="flex itemscenter justify-between w-full font-semibold text-lg md:text-xl mt-5 self-start">

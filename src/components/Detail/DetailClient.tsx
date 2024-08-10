@@ -24,6 +24,7 @@ const DetailClient = ({ product }: { product: any }) => {
   const { productCartQty, addToBasket, cartPrdcts } = useCart();
   const [displayButton, setDisplayButton] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [averageRating, setAverageRating] = useState<number>(0);
   const [cardProduct, setCardProduct] = useState<CardProductProps>({
     id: product.id,
     name: product.name,
@@ -38,6 +39,7 @@ const DetailClient = ({ product }: { product: any }) => {
     const response = await fetch(`/api/review?productId=${product.id}`);
     const data = await response.json();
     setReviews(data);
+    calculateAverageRating(data);
   };
 
   useEffect(() => {
@@ -53,6 +55,20 @@ const DetailClient = ({ product }: { product: any }) => {
   useEffect(() => {
     fetchReviews();
   }, [product.id]);
+
+  const calculateAverageRating = (reviews: any[]) => {
+    if (reviews.length === 0) {
+      setAverageRating(0);
+    } else {
+      const totalRating = reviews.reduce(
+        (acc, review) => acc + review.rating,
+        0
+      );
+      const average = totalRating / reviews.length;
+      setAverageRating(average);
+      console.log(averageRating, "sasdasdsad");
+    }
+  };
 
   const { toast } = useToast();
 
@@ -123,14 +139,9 @@ const DetailClient = ({ product }: { product: any }) => {
               {product.price} ₺
             </div>
             <div className="flex flex-col items-center gap-2">
-              <Rating
-                name="read-only"
-                value={product.value}
-                readOnly
-                className="text-lg"
-              />
+              <Rating name="read-only" value={averageRating} readOnly />
               <span className="text-black text-xs">
-                {product.evaluation} Değerlendirme
+                ({reviews.length}) Değerlendirme
               </span>
             </div>
           </div>
