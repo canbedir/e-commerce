@@ -25,7 +25,7 @@ const UserComponent = ({ currentUser }: UserProps) => {
   const { toast } = useToast();
 
   const logoutFunc = () => {
-    return signOut(), router.push("/"), router.refresh();
+    return signOut({callbackUrl:"/"}),router.refresh();
   };
 
   return (
