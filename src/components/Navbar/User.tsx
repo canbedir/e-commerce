@@ -107,7 +107,7 @@ const UserComponent = ({ currentUser }: UserProps) => {
                   <SheetTitle>Profili düzenle</SheetTitle>
                   <SheetDescription>
                     Profilinizi burada düzenleyebilirsiniz. Bitirdiğinizde
-                    kaydet'e tıklayın.
+                    kaydet&apos;e tıklayın.
                   </SheetDescription>
                 </SheetHeader>
                 <div className="grid gap-4 py-4">
