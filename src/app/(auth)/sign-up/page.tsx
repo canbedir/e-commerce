@@ -98,9 +98,9 @@ const SignUpPage = () => {
       <Button variant={"outline"} onClick={handleSubmit(onSubmit)}>
         Kayıt Ol
       </Button>
-      <span className="text-white text-center font-bold">OR</span>
+      <span className="text-white text-center font-bold">YA DA</span>
       <Button
-        onClick={() => signIn("google")}
+        onClick={() => signIn("google",{callbackUrl:"/"})}
         className="flex gap-2 bg-[#1E2227] text-white border hover:bg-white hover:text-black"
       >
         <FaGoogle size={20} />
@@ -109,7 +109,7 @@ const SignUpPage = () => {
       <div className="text-white">
         Hesabın var ise
         <Link className="text-orange-500" href={"/sign-in"}>
-          Giriş Yap
+          <span> Giriş yap</span>
         </Link>
       </div>
     </div>
