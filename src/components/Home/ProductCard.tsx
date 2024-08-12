@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 import useCart from "@/hooks/useCart";
 import { useReviews } from "@/hooks/useReviews";
+import Link from "next/link";
 
 const ProductCard = ({ product }: { product: any }) => {
   const router = useRouter();
@@ -49,12 +50,16 @@ const ProductCard = ({ product }: { product: any }) => {
 
   return (
     <div className="w-[240px] cursor-pointer shadow-lg p-2 rounded-md border text-white border-white hover:border-red-700 bg-zinc-900 hover:bg-zinc-800 flex flex-col justify-between">
-      <div
-        className="relative h-[180px]"
-        onClick={() => router.push(`product/${product.id}`)}
-      >
-        <Image src={product.image} alt="" fill className="object-contain" />
-      </div>
+      <Link href={`product/${product.id}`} passHref>
+        <div className="relative h-[180px]">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            className="object-contain"
+          />
+        </div>
+      </Link>
       <div className="mt-2 flex flex-col items-start gap-1 flex-grow">
         <div className="flex gap-2">
           <span className="font-bold line-clamp-2">
