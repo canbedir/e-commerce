@@ -1,3 +1,4 @@
+// cartclient.tsx
 "use client";
 
 import useCart from "@/hooks/useCart";
@@ -7,7 +8,10 @@ import { CardProductProps } from "../Detail/DetailClient";
 import Counter from "../General/Counter";
 import { Trash } from "lucide-react";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation"; // next/router yerine next/navigation
+import { useEffect, useState } from "react";
+import { getCurrentUser } from "@/app/actions/getCurrentUser"; // getCurrentUser fonksiyonunu import et
+import { User } from "@prisma/client";
 
 const CartClient = () => {
   const {
@@ -17,8 +21,26 @@ const CartClient = () => {
     addToBasketIncrease,
     addToBasketDecrease,
   } = useCart();
+  const router = useRouter(); // useRouter hook'u ile router'ı al
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    async function checkUser() {
+      const currentUser = await getCurrentUser();
+      setUser(currentUser);
+    }
+
+    checkUser();
+  }, []);
 
   const checkoutCart = () => {
+    if (!user) {
+      // Eğer kullanıcı giriş yapmamışsa
+      alert("Lütfen sipariş vermek için giriş yapın.");
+      router.push("/login"); // Giriş yap sayfasına yönlendir
+      return;
+    }
+
     if (!cartPrdcts) {
       return null;
     }
@@ -120,11 +142,22 @@ const CartClient = () => {
         </div>
       </div>
       <div className="text-end">
-        <Link href={"/payment"}>
-          <Button onClick={checkoutCart} variant={"active"} size={"lg"}>
-            Sipariş Ver
+        {user ? (
+          <Link href={"/payment"}>
+            <Button
+              onClick={checkoutCart}
+              disabled={!user}
+              variant={"active"}
+              size={"lg"}
+            >
+              Sipariş Ver
+            </Button>
+          </Link>
+        ) : (
+          <Button disabled={!user} variant={"active"} size={"lg"}>
+            Sipariş vermek için giriş yap
           </Button>
-        </Link>
+        )}
       </div>
     </div>
   );
