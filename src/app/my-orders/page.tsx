@@ -25,7 +25,7 @@ interface Order {
 
 const OrdersComponent: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
-  const ordersPerPage = 5; // Bir sayfada gösterilecek sipariş sayısı
+  const ordersPerPage = 5;
 
   const router = useRouter();
   const searchParams = useSearchParams();

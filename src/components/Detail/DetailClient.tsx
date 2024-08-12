@@ -20,6 +20,15 @@ export type CardProductProps = {
   inStock: boolean;
 };
 
+interface Order {
+  id: string;
+  name: string;
+  quantity: number;
+  price: number;
+  date: string;
+  image: string;
+}
+
 const DetailClient = ({ product }: { product: any }) => {
   const { productCartQty, addToBasket, cartPrdcts } = useCart();
   const [displayButton, setDisplayButton] = useState(false);
@@ -69,6 +78,19 @@ const DetailClient = ({ product }: { product: any }) => {
       console.log(averageRating, "sasdasdsad");
     }
   };
+
+  const [canComment, setCanComment] = useState(false);
+
+  useEffect(() => {
+    const rawOrders = localStorage.getItem("my-orders");
+    const savedOrders = rawOrders ? JSON.parse(rawOrders) : [];
+
+    const productPurchased = savedOrders.some(
+      (order: Order) => order.id === product.id
+    );
+
+    setCanComment(productPurchased);
+  }, [product.id]);
 
   const { toast } = useToast();
 
@@ -207,10 +229,14 @@ const DetailClient = ({ product }: { product: any }) => {
         ) : (
           <p>Bu ürün için henüz yorum yapılmamış.</p>
         )}
-        <CommentForm
-          productId={product.id}
-          onCommentAdded={handleCommentAdded}
-        />
+        {canComment ? (
+          <CommentForm
+            productId={product.id}
+            onCommentAdded={handleCommentAdded}
+          />
+        ) : (
+          <p className="mt-10 text-lg">Bu ürüne yorum yapmak için önce satın almalısınız.</p>
+        )}
       </div>
     </div>
   );

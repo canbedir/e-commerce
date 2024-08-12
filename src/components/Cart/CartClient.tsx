@@ -1,4 +1,3 @@
-// cartclient.tsx
 "use client";
 
 import useCart from "@/hooks/useCart";
@@ -8,10 +7,11 @@ import { CardProductProps } from "../Detail/DetailClient";
 import Counter from "../General/Counter";
 import { Trash } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // next/router yerine next/navigation
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getCurrentUser } from "@/app/actions/getCurrentUser"; // getCurrentUser fonksiyonunu import et
+import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import { User } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 const CartClient = () => {
   const {
@@ -21,7 +21,7 @@ const CartClient = () => {
     addToBasketIncrease,
     addToBasketDecrease,
   } = useCart();
-  const router = useRouter(); // useRouter hook'u ile router'ı al
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -33,11 +33,11 @@ const CartClient = () => {
     checkUser();
   }, []);
 
+  const { data: session } = useSession();
+
   const checkoutCart = () => {
-    if (!user) {
-      // Eğer kullanıcı giriş yapmamışsa
+    if (!session?.user) {
       alert("Lütfen sipariş vermek için giriş yapın.");
-      router.push("/login"); // Giriş yap sayfasına yönlendir
       return;
     }
 
@@ -142,21 +142,22 @@ const CartClient = () => {
         </div>
       </div>
       <div className="text-end">
-        {user ? (
+        {!session?.user ? (
+          <Link href={"/sign-in"}>
+            <Button variant={"active"} size={"lg"}>
+              Sipariş vermek için giriş yap
+            </Button>
+          </Link>
+        ) : (
           <Link href={"/payment"}>
             <Button
               onClick={checkoutCart}
-              disabled={!user}
               variant={"active"}
               size={"lg"}
             >
               Sipariş Ver
             </Button>
           </Link>
-        ) : (
-          <Button disabled={!user} variant={"active"} size={"lg"}>
-            Sipariş vermek için giriş yap
-          </Button>
         )}
       </div>
     </div>
