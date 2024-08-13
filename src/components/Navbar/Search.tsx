@@ -85,14 +85,14 @@ const Search = () => {
               width: "60%",
               minWidth: "500px",
               "& .MuiInputBase-root": {
-                borderRadius: "5px",
+                borderRadius: "50px",
                 bgcolor: "white",
               },
               "& .MuiInputLabel-root": {
                 color: "gray",
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "red",
+                color: "orange",
               },
             }}
             InputProps={{
