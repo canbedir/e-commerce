@@ -84,7 +84,7 @@ const UserComponent = ({ currentUser }: UserProps) => {
           <DropdownMenuTrigger>
             <User2 className="cursor-pointer" size={25} />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="absolute right-0 bg-white rounded-md shadow-lg z-50">
+          <DropdownMenuContent className="bg-white rounded-md shadow-lg z-50">
             <DropdownMenuLabel>{currentUser.email}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <Link href={"/admin"}>

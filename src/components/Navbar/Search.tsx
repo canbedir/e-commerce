@@ -44,7 +44,8 @@ const Search = () => {
     if (query.trim()) {
       try {
         router.push(`/search?query=${query}`);
-        return setQuery(""), router.refresh()
+        setQuery("");
+        router.refresh();
       } catch (error) {
         return null;
       }
@@ -82,8 +83,14 @@ const Search = () => {
             label="Ürünleri ara"
             size="small"
             sx={{
-              width: "60%",
-              minWidth: "500px",
+              minWidth:{
+                xs:"200px",
+                sm:"340px",
+                md:"270px",
+                lg:"360px",
+                xl:"500px"
+              },
+              maxWidth: "800px",
               "& .MuiInputBase-root": {
                 borderRadius: "50px",
                 bgcolor: "white",
