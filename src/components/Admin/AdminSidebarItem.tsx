@@ -19,9 +19,9 @@ const AdminSidebarItem = ({
   return (
     <Link
       href={url}
-      className={`cursor-pointer mt-5 text-white`}
+      className={`cursor-pointer mt-5`}
     >
-      <Button className="p-8 flex gap-2" variant={"secondary"}>
+      <Button className="p-8 flex gap-2  hover:scale-110 transition-all" variant={"secondary"} >
         <Icon size={25} />
         <div>{name}</div>
       </Button>
