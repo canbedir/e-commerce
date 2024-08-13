@@ -31,23 +31,43 @@ const CreateForm = () => {
 
   const categoryList = [
     {
-      name: "Ayakkabı",
+      name: "Elektronik",
       icon: TbShoe,
     },
     {
-      name: "Çanta",
+      name: "Giyim",
       icon: FaShoppingBag,
     },
     {
-      name: "Gömlek",
+      name: "Ev Eşyaları",
       icon: RiShirtFill,
     },
     {
-      name: "Gözlük",
+      name: "Kırtasiye",
       icon: IoGlasses,
     },
     {
-      name: "Tshirt",
+      name: "Oto",
+      icon: FaTshirt,
+    },
+    {
+      name: "Bebek",
+      icon: FaTshirt,
+    },
+    {
+      name: "Spor",
+      icon: FaTshirt,
+    },
+    {
+      name: "Kişisel Bakım",
+      icon: FaTshirt,
+    },
+    {
+      name: "Pet",
+      icon: FaTshirt,
+    },
+    {
+      name: "Kitap",
       icon: FaTshirt,
     },
   ];
@@ -167,55 +187,57 @@ const CreateForm = () => {
   };
 
   return (
-    <div>
+    <div className="w-1/2">
       <span className="absolute left-10 text-white">
         <Link href={"/admin"}>
           <FaArrowLeft size={30} />
         </Link>
       </span>
       <h1 className="text-center text-2xl font-bold text-white">ÜRÜN EKLE</h1>
-      <InputComponents
-        adminui
-        placeholder="Ad"
-        type="text"
-        id="name"
-        register={register}
-        errors={errors}
-        required
-      />
-      <InputComponents
-        adminui
-        placeholder="Acıklama"
-        type="text"
-        id="description"
-        register={register}
-        errors={errors}
-        required
-      />
-      <InputComponents
-        adminui
-        placeholder="Marka"
-        type="text"
-        id="brand"
-        register={register}
-        errors={errors}
-        required
-      />
-      <InputComponents
-        adminui
-        placeholder="Fiyat"
-        type="number"
-        id="price"
-        register={register}
-        errors={errors}
-        required
-      />
-      <CheckboxComponent
-        id="inStock"
-        label="Ürün Stokta Mevcut mu ?"
-        register={register}
-      />
-      <div className="grid grid-cols-3 gap-3">
+      <div className="flex flex-col">
+        <InputComponents
+          adminui
+          placeholder="Ad"
+          type="text"
+          id="name"
+          register={register}
+          errors={errors}
+          required
+        />
+        <InputComponents
+          adminui
+          placeholder="Acıklama"
+          type="text"
+          id="description"
+          register={register}
+          errors={errors}
+          required
+        />
+        <InputComponents
+          adminui
+          placeholder="Marka"
+          type="text"
+          id="brand"
+          register={register}
+          errors={errors}
+          required
+        />
+        <InputComponents
+          adminui
+          placeholder="Fiyat"
+          type="number"
+          id="price"
+          register={register}
+          errors={errors}
+          required
+        />
+        <CheckboxComponent
+          id="inStock"
+          label="Ürün Stokta Mevcut mu ?"
+          register={register}
+        />
+      </div>
+      <div className="grid grid-cols-3 gap-5">
         {categoryList.map((cat, i) => (
           <ChoiceInput
             key={i}
@@ -226,7 +248,7 @@ const CreateForm = () => {
           />
         ))}
       </div>
-      <Input className="my-3" type="file" onChange={onChangeFunc}/>
+      <Input className="my-5" type="file" onChange={onChangeFunc} />
       <Button text="Ekle" whiteColor onClick={handleSubmit(onSubmit)} />
     </div>
   );
