@@ -24,6 +24,15 @@ import { RiShirtFill } from "react-icons/ri";
 import { FaArrowLeft, FaDownLeftAndUpRightToCenter } from "react-icons/fa6";
 import Link from "next/link";
 import { Input } from "../ui/input";
+import { GiElectric } from "react-icons/gi";
+import { TiHome } from "react-icons/ti";
+import { IoPencil } from "react-icons/io5";
+import { FaCar } from "react-icons/fa6";
+import { FaBaby } from "react-icons/fa";
+import { MdOutlineSportsTennis } from "react-icons/md";
+import { GiComb } from "react-icons/gi";
+import { MdOutlinePets } from "react-icons/md";
+import { FaBook } from "react-icons/fa";
 
 const CreateForm = () => {
   const [img, setImg] = useState<File | null>(null);
@@ -32,43 +41,43 @@ const CreateForm = () => {
   const categoryList = [
     {
       name: "Elektronik",
-      icon: TbShoe,
+      icon: GiElectric,
     },
     {
       name: "Giyim",
-      icon: FaShoppingBag,
+      icon: TbShoe,
     },
     {
       name: "Ev Eşyaları",
-      icon: RiShirtFill,
+      icon: TiHome,
     },
     {
       name: "Kırtasiye",
-      icon: IoGlasses,
+      icon: IoPencil,
     },
     {
       name: "Oto",
-      icon: FaTshirt,
+      icon: FaCar,
     },
     {
       name: "Bebek",
-      icon: FaTshirt,
+      icon: FaBaby,
     },
     {
       name: "Spor",
-      icon: FaTshirt,
+      icon: MdOutlineSportsTennis,
     },
     {
       name: "Kişisel Bakım",
-      icon: FaTshirt,
+      icon: GiComb,
     },
     {
       name: "Pet",
-      icon: FaTshirt,
+      icon: MdOutlinePets,
     },
     {
       name: "Kitap",
-      icon: FaTshirt,
+      icon: FaBook,
     },
   ];
 
