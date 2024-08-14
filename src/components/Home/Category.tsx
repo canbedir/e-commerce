@@ -1,43 +1,69 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Category = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   const categoryList = [
-    { name: "Ayakkabı" },
-    { name: "Çanta" },
-    { name: "Gömlek" },
-    { name: "Gözlük" },
-    { name: "Tshirt" },
+    { name: "Elektronik" },
+    { name: "Giyim" },
+    { name: "Kırtasiye" },
+    { name: "Oto" },
+    { name: "Bebek" },
+    { name: "Spor" },
+    { name: "Kişisel Bakım" },
+    { name: "Pet" },
+    { name: "Kitap" },
+  ];
+
+  const categoryPushList = [
+    { name: "Elektronik", urlName: "Elektronik" },
+    { name: "Giyim", urlName: "Giyim" },
+    { name: "Kırtasiye", urlName: "Kirtasiye" },
+    { name: "Oto", urlName: "Oto" },
+    { name: "Bebek", urlName: "Bebek" },
+    { name: "Spor", urlName: "Spor" },
+    { name: "Kişisel Bakım", urlName: "Kisisel-Bakim" },
+    { name: "Pet", urlName: "Pet" },
+    { name: "Kitap", urlName: "Kitap" },
   ];
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 10);
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
+  const handleCategoryClick = (categoryName: string) => {
+    const category = categoryPushList.find((cat) => cat.name === categoryName);
+    if (category) {
+      router.push(`/category/${category.urlName}`);
+    }
+  };
+
   return (
-    <div className="gap-3 md:gap-10 md:py-8 py-5 grid grid-cols-3 md:grid-cols-5">
+    <div className="md:py-8 py-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 lg:ml-24">
       {isLoading
         ? Array(5)
             .fill(0)
             .map((_, index) => (
               <Skeleton
                 key={index}
-                className="min-w-[120px] h-[48px] rounded-md"
+                className="min-w-[650px] h-[48px] rounded-md"
               />
             ))
         : categoryList.map((category, index) => (
             <div
               key={index}
-              className="text-white border border-white rounded-md min-w-[120px] flex flex-1 items-center justify-center cursor-pointer text-center px-4 py-2 hover:border-red-700 transition"
+              className="w-full text-gray-300 font-semibold border-r lg:px-10 border-gray-500 flex items-center justify-center py-2 "
+              onClick={() => handleCategoryClick(category.name)}
             >
-              {category.name}
+              <span className="cursor-pointer hover:text-white ">{category.name}</span>
             </div>
           ))}
     </div>
