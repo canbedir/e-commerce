@@ -67,17 +67,15 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="p-32 w-2/3 flex flex-col gap-5">
+    <div className="p-24 lg:w-3/5 flex flex-col gap-5 bg-white rounded-2xl">
       <div>
-        <h1 className="text-white text-center font-extrabold text-3xl mb-5">
-          Sign Up
-        </h1>
+        <h1 className="text-center font-extrabold text-3xl mb-5">Kayıt ol</h1>
         <Input
           placeholder="Email"
           type="email"
           {...register("email", { required: "Email zorunlu" })}
           className={`border ${
-            errors.email ? "border-red-500" : "border-gray-300"
+            errors.email ? "border-red-600" : "border-gray-300"
           }`}
         />
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
@@ -88,28 +86,36 @@ const SignUpPage = () => {
           type="password"
           {...register("password", { required: "Şifre zorunlu" })}
           className={`border ${
-            errors.password ? "border-red-500" : "border-gray-300"
+            errors.password ? "border-red-600" : "border-gray-300"
           }`}
         />
         {errors.password && (
           <p className="text-red-500">{errors.password.message}</p>
         )}
       </div>
-      <Button variant={"outline"} onClick={handleSubmit(onSubmit)}>
-        Kayıt Ol
-      </Button>
-      <span className="text-white text-center font-bold">YA DA</span>
       <Button
-        onClick={() => signIn("google",{callbackUrl:"/"})}
-        className="flex gap-2 bg-[#1E2227] text-white border hover:bg-white hover:text-black"
+        className="bg-black text-white hover:bg-black/80 text-lg transition-all"
+        onClick={handleSubmit(onSubmit)}
       >
-        <FaGoogle size={20} />
-        <span className="text-lg">Google ile kayıt ol</span>
+        Kayıt ol
       </Button>
-      <div className="text-white">
-        Hesabın var ise
-        <Link className="text-orange-500" href={"/sign-in"}>
-          <span> Giriş yap</span>
+      <span className=" text-center font-bold">YA DA</span>
+      <Button
+        onClick={() => signIn("google", { callbackUrl: "/" })}
+        className="relative flex gap-2 text-white border overflow-hidden transition-all duration-500 bg-gradient-to-r from-cyan-500 to-blue-500"
+      >
+        <span className="absolute inset-0 transition-transform duration-500 transform hover:translate-x-full bg-gradient-to-r from-cyan-500 to-blue-500"></span>
+        <span className="absolute inset-0 transition-transform duration-500 transform -translate-x-full hover:translate-x-0 bg-gradient-to-r from-black to-cyan-500"></span>
+        <span className="relative z-10 flex items-center gap-2">
+          <FaGoogle size={20} />
+          <span className="text-lg">Google ile kayıt ol</span>
+        </span>
+      </Button>
+
+      <div>
+        <Link href={"/sign-in"}>
+          <span>Hesabın var ise</span>
+          <span className="font-bold"> Giriş yap</span>
         </Link>
       </div>
     </div>
