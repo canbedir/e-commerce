@@ -49,14 +49,14 @@ const Category = () => {
   };
 
   return (
-    <div className="md:py-8 py-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 lg:ml-24">
+    <div className="md:py-8 py-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 ">
       {isLoading
         ? Array(5)
             .fill(0)
             .map((_, index) => (
               <Skeleton
                 key={index}
-                className="min-w-[650px] h-[48px] rounded-md"
+                className="min-w-[790px] h-[58px] rounded-md"
               />
             ))
         : categoryList.map((category, index) => (
