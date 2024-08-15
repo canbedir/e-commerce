@@ -189,13 +189,24 @@ const DetailClient = ({ product }: { product: any }) => {
                   />
                 </div>
                 <div>
-                  <Button
-                    size={"lg"}
-                    variant={"mycolor"}
-                    onClick={handleCombinedClick}
-                  >
-                    Sepete Ekle
-                  </Button>
+                  {product.inStock ? (
+                    <Button
+                      size={"lg"}
+                      variant={"mycolor"}
+                      onClick={handleCombinedClick}
+                    >
+                      Sepete Ekle
+                    </Button>
+                  ) : (
+                    <Button
+                      size={"lg"}
+                      variant={"mycolor"}
+                      disabled
+                      onClick={handleCombinedClick}
+                    >
+                      Ürün stokta bulunmamaktadır
+                    </Button>
+                  )}
                 </div>
               </div>
             </>
@@ -235,7 +246,9 @@ const DetailClient = ({ product }: { product: any }) => {
             onCommentAdded={handleCommentAdded}
           />
         ) : (
-          <p className="mt-10 text-lg">Bu ürüne yorum yapmak için önce satın almalısınız.</p>
+          <p className="mt-10 text-lg">
+            Bu ürüne yorum yapmak için önce satın almalısınız.
+          </p>
         )}
       </div>
     </div>
