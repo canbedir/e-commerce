@@ -8,33 +8,32 @@ export interface IProductParams {
 export default async function getProducts(params: IProductParams) {
   try {
     const { category, search } = params;
-    let searchString = search;
-    if (!search) {
-      searchString = "";
-    }
-
+    
     let query: any = {};
 
     if (category) {
       query.category = category;
     }
 
-    const products = await prisma.product.findMany({
-      where: {
-        ...query,
-        OR: [
-          {
-            name: {
-              contains: searchString,
-              mode: "insensitive",
-            },
-            description: {
-              contains: searchString,
-              mode: "insensitive",
-            },
+    if (search) {
+      query.OR = [
+        {
+          name: {
+            contains: search,
+            mode: "insensitive",
           },
-        ],
-      },
+        },
+        {
+          description: {
+            contains: search,
+            mode: "insensitive",
+          },
+        },
+      ];
+    }
+
+    const products = await prisma.product.findMany({
+      where: query,
       include: {
         reviews: {
           include: {

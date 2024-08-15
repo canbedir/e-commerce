@@ -29,7 +29,7 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
   )?.name || categoryUrl;
 
   const host = process.env.MAIN_SITE_URL ? `https://${process.env.MAIN_SITE_URL}` : 'http://localhost:3000';
-  const response = await fetch(`${host}/api/search?category=${categoryUrl}`);
+  const response = await fetch(`${host}/api/search?category=${categoryUrl}`, { cache: 'no-store' });
   const products: Product[] = await response.json();
 
   if (!products.length) {
