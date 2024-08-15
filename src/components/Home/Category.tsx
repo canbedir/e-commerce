@@ -16,6 +16,7 @@ const Category = () => {
     { name: "Bebek" },
     { name: "Spor" },
     { name: "Kişisel Bakım" },
+    { name: "Ev Eşyaları", urlName: "Ev-Esyalari" },
     { name: "Pet" },
     { name: "Kitap" },
   ];
@@ -28,6 +29,7 @@ const Category = () => {
     { name: "Bebek", urlName: "Bebek" },
     { name: "Spor", urlName: "Spor" },
     { name: "Kişisel Bakım", urlName: "Kisisel-Bakim" },
+    { name: "Ev Eşyaları", urlName: "Ev-Esyalari" },
     { name: "Pet", urlName: "Pet" },
     { name: "Kitap", urlName: "Kitap" },
   ];

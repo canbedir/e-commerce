@@ -48,11 +48,11 @@ const CreateForm = () => {
       icon: TbShoe,
     },
     {
-      name: "Ev Eşyaları",
+      name: "Ev-Esyalari",
       icon: TiHome,
     },
     {
-      name: "Kırtasiye",
+      name: "Kirtasiye",
       icon: IoPencil,
     },
     {
@@ -68,7 +68,7 @@ const CreateForm = () => {
       icon: MdOutlineSportsTennis,
     },
     {
-      name: "Kişisel Bakım",
+      name: "Kisisel-Bakim",
       icon: GiComb,
     },
     {

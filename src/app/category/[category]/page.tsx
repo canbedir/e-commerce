@@ -20,6 +20,7 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
     { name: "Bebek", urlName: "Bebek" },
     { name: "Spor", urlName: "Spor" },
     { name: "Kişisel Bakım", urlName: "Kisisel-Bakim" },
+    { name: "Ev Eşyaları", urlName: "Ev-Esyalari" },
     { name: "Pet", urlName: "Pet" },
     { name: "Kitap", urlName: "Kitap" },
   ];
