@@ -59,7 +59,7 @@ const UserComponent = ({ currentUser }: UserProps) => {
           title: "Profil güncellendi",
           description: "Profiliniz başarıyla güncellendi.",
         });
-        router.refresh();
+        await signOut({ callbackUrl: "/sign-in" });
       } else {
         toast({
           title: "Hata",
