@@ -61,7 +61,7 @@ const ProductCard = ({ product }: { product: any }) => {
 
   return (
     <div className="w-[240px] cursor-pointer shadow-lg p-2 rounded-md border text-white border-white hover:border-red-700 bg-zinc-900 hover:bg-zinc-800 flex flex-col justify-between">
-      <Link href={`product/${product.id}`} passHref>
+      <Link href={`/product/${product.id}`} passHref>
         <div className="relative h-[180px]">
           <Image
             src={product.image}
