@@ -9,6 +9,8 @@ import { useToast } from "../ui/use-toast";
 import useCart from "@/hooks/useCart";
 import { useReviews } from "@/hooks/useReviews";
 import Link from "next/link";
+import { products } from "@/utils/Products";
+import { CardProductProps } from "../Detail/DetailClient";
 
 const ProductCard = ({ product }: { product: any }) => {
   const router = useRouter();
@@ -16,6 +18,15 @@ const ProductCard = ({ product }: { product: any }) => {
   const [displayButton, setDisplayButton] = useState(false);
   const { reviews, averageRating } = useReviews(product.id);
   const { toast } = useToast();
+  const [cardProduct, setCardProduct] = useState<CardProductProps>({
+    id: product.id,
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    quantity: 1,
+    image: product.image,
+    inStock: product.inStock,
+  });
 
   const addToBasketFnc = () => {
     const cardProduct = {
@@ -90,19 +101,21 @@ const ProductCard = ({ product }: { product: any }) => {
           {product.price} <span className="text-green-600">₺</span>
         </div>
         <div>
-          {displayButton ? (
-            <Button size={"sm"} variant={"active"}>
-              Ürün Sepette
-            </Button>
-          ) : (
-            <Button
-              size={"sm"}
-              variant={"secondary"}
-              onClick={handleCombinedClick}
-            >
-              Sepete Ekle
-            </Button>
-          )}
+          {product.inStock ? <div>
+            {displayButton ? (
+              <Button size={"sm"} variant={"active"}>
+                Ürün Sepette
+              </Button>
+            ) : (
+              <Button
+                size={"sm"}
+                variant={"secondary"}
+                onClick={handleCombinedClick}
+              >
+                Sepete Ekle
+              </Button>
+            )}
+          </div> : <Button disabled variant={"secondary"} size={"sm"}>Stokta yok</Button>}
         </div>
       </div>
     </div>
