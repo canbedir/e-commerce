@@ -49,16 +49,20 @@ const Category = () => {
   };
 
   return (
-    <div className="md:py-8 py-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 ">
-      {categoryList.map((category, index) => (
-            <div
-              key={index}
-              className="w-full text-gray-300 font-semibold border-r lg:px-10 border-gray-500 flex items-center justify-center py-2 "
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4">
+        {categoryList.map((category, index) => (
+          <React.Fragment key={index}>
+            {index > 0 && <span className="text-gray-300 hidden md:inline">|</span>}
+            <button 
               onClick={() => handleCategoryClick(category.name)}
+              className="text-sm md:text-base text-gray-300 hover:text-white hover:underline transition-colors duration-300 ease-in-out p-2"
             >
-              <span className="cursor-pointer hover:text-white ">{category.name}</span>
-            </div>
-          ))}
+              {category.name}
+            </button>
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
 };
